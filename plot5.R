@@ -24,7 +24,7 @@ motordata<-subset(submary, SCC %in% motorrel)
 year<- unique(NEI$year)
 xdata<-with(motordata,tapply(Emissions,year,sum,na.rm = T))
 png(filename = "plot5.png", width = 480, height = 480)
-plot(year,xdata,type = "l",main ="Motor Vehical PM2.5 changed from 1999–2008")
+plot(year,xdata,type = "l",xlab = "Year", ylab = "Total Emissions(tons)",main ="Motor Vehical PM2.5 changed from 1999–2008")
 dev.off()
 
 
