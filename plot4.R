@@ -15,17 +15,13 @@ NEI <- readRDS("summarySCC_PM25.rds")
 SCC <- readRDS("Source_Classification_Code.rds")
 
 #### subset data of coal combustion-related sources
-submary<- subset(NEI, subset = (fips == "24510"), c(SCC,Emissions,year))
-index<-grepl('Comb',SCC$Short.Name)&grepl('Coal',SCC$Short.Name)
+index<-(grep('Coal',SCC$Short.Name))
 coalrel<-SCC$SCC[index]
-coaldata<-subset(submary, SCC %in% coalrel)
+coaldata<-subset(NEI, SCC %in% coalrel)
 
 #### plot and save to file
-year<- unique(NEI$year)
-xdata<-with(coaldata,tapply(Emissions,year,sum,na.rm = T))
+ydata<-with(coaldata,tapply(Emissions,year,sum,na.rm = T))
+year<- names(ydata)
 png(filename = "plot4.png", width = 480, height = 480)
-plot(year,xdata,type = "l",main ="Coal combustion-related PM2.5 emission sources changed from 1999–2008")
+plot(year,ydata,type = "l", xlab = "Year", ylab = "Total Emissions(tons)", main ="Coal-related PM2.5 Emission changed from 1999–2008")
 dev.off()
-
-
-
