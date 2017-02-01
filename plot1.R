@@ -19,5 +19,5 @@ year<-names(alldata)
 
 #### plot and save to file
 png(filename = "plot1.png", width = 480, height = 480)
-plot(year,alldata,type = "l",main ="PM2.5 emission in USA from 1999 to 2008")
+plot(year,alldata,type = "l", xlab = "Year", ylab = "Total Emissions(tons)",main ="PM2.5 Emission in USA from 1999 to 2008")
 dev.off()
