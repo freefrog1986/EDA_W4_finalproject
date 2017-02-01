@@ -20,6 +20,6 @@ submary<- subset(NEI, subset = (fips == "24510"), c(type,Emissions,year))
 #### plot and save to file
 png(filename = "plot3.png", width = 480, height = 480)
 g<-ggplot(submary,aes(x= year, y= Emissions, color = factor(type)))
-g+geom_smooth(size = 1, linetype = 1, method = "lm", se = FALSE)+labs(title = "Trend of different source type in the Baltimore City")
+g+geom_smooth(size = 1, linetype = 5,  method = "loess", se = FALSE)+labs(title = "Trend of different source type in the Baltimore City")
 dev.off()
 
