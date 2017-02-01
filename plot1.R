@@ -13,7 +13,7 @@ unzip(localfile)
 NEI <- readRDS("summarySCC_PM25.rds")
 SCC <- readRDS("Source_Classification_Code.rds")
 
-#### subset data
+#### subset data of different year
 sub1999<- subset(NEI, year == 1999 , c(SCC,Emissions,year))
 sub2002<- subset(NEI, year == 2002 , c(SCC,Emissions,year))
 sub2005<- subset(NEI, year == 2005 , c(SCC,Emissions,year))
