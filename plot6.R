@@ -16,17 +16,17 @@ NEI <- readRDS("summarySCC_PM25.rds")
 SCC <- readRDS("Source_Classification_Code.rds")
 
 #### subset data
-subdata<-subset(NEI, subset = (fips == c("24510","06037")), c(fips,SCC,Emissions,year))
-index<-grepl('Vehicle',SCC$Short.Name)
+subdata<-subset(NEI, subset = (fips %in% c("24510","06037")), c(fips,SCC,Emissions,year))
+index<-grepl('vehicle',SCC$SCC.Level.Two, ignore.case=TRUE)
 motorrel<-SCC$SCC[index]
 subdata2<-subset(subdata, SCC %in% motorrel)
-spldata<-split(subdata2, subdata2$fips)
-sumdata1<-with(spldata$`06037`,tapply(Emissions,year,sum,na.rm = T))
-sumdata2<-with(spldata$`24510`,tapply(Emissions,year,sum,na.rm = T))
-df<-data.frame(city=c(rep('LA',4),rep('Bal',4)),Emissions=c(sumdata1,sumdata2),year= rep(names(sumdata2),2))
+df <- aggregate(Emissions ~ year + fips, subdata2, sum)
 
 #### plot and save to file
 png(filename = "plot6.png", width = 960, height = 480)
-g<-ggplot(df,aes(year,Emissions))
-g+geom_point(alpha=1)+facet_grid(.~city)
+g<-ggplot(df,aes(year,Emissions,color = fips))
+g+geom_line() +
+  xlab("Year") +
+  ylab(expression("Total PM"[2.5]*" Emissions")) +
+  ggtitle("Total Emissions from vechicle in Baltimore and Los Angeles")
 dev.off()

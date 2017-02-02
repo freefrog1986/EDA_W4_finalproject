@@ -15,9 +15,8 @@ NEI <- readRDS("summarySCC_PM25.rds")
 SCC <- readRDS("Source_Classification_Code.rds")
 
 #### subset data of coal combustion-related sources
-index<-(grep('Coal',SCC$Short.Name))
+index<-(grep('coal',SCC$Short.Name, ignore.case=TRUE))
 coalrel<-SCC$SCC[index]
-coaldata<-subset(NEI, SCC %in% coalrel)
 
 #### plot and save to file
 ydata<-with(coaldata,tapply(Emissions,year,sum,na.rm = T))
